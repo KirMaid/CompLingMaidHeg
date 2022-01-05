@@ -54,7 +54,9 @@ for news in urls:
         'content': news_text,
         'videolink': video_link
     }
-    newsposts.insert_one(post)
+
+    if newsposts.find_one({'link':news}) is None:
+        newsposts.insert_one(post)
     # print(news)
     # print(header.find(class_='dt').text)
 
