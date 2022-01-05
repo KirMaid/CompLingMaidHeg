@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Ling_Sema.iml" filepath="$PROJECT_DIR$/.idea/Ling_Sema.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/CompLingMaidHeg.iml" filepath="$PROJECT_DIR$/.idea/CompLingMaidHeg.iml" />
     </modules>
   </component>
 </project>
