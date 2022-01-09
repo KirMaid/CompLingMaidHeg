@@ -1,4 +1,5 @@
 import requests
+import lxml
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
 
@@ -21,6 +22,7 @@ video_link = ""
 news = ""
 news_text = ''
 video_link = ''
+video_links =[]
 for title in links:
     str = title.get('href')
     if (len(str) > 35 and str[0] == "/" and str[1] != "/"):
@@ -57,9 +59,9 @@ for news in urls:
         'content': news_text,
         'videolink': video_link
     }
-
     if newsposts.find_one({'link':news}) is None:
         newsposts.insert_one(post)
+    news_text=''
     # print(news)
     # print(header.find(class_='dt').text)
 
