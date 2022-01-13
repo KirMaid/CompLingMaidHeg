@@ -6,7 +6,14 @@
         <p>{{ new_one.date }}</p>
         <p class="fw-bold">{{ new_one.title }}</p>
         <p>{{ new_one.content }}</p>
-        <p>{{ new_one.videolink }}</p>
+        <p>
+          <a
+            class="link-primary"
+            target="_blank"
+            v-bind:href="new_one.videolink"
+            >{{ new_one.videolink }}</a
+          >
+        </p>
         <p>
           <a class="link-primary" target="_blank" v-bind:href="new_one.link">{{
             new_one.link
@@ -27,12 +34,10 @@ export default {
   },
   methods: {
     getPosts() {
-      //alert("fsdfsdfs");
       this.$http
         .get("http://192.168.0.106:3000")
         .then((response) => {
           this.news = response.data;
-          //alert(response.data);
         })
         .catch((err) => {
           console.log(err);
