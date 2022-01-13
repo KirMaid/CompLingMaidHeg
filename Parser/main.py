@@ -1,3 +1,5 @@
+import datetime
+
 import requests
 import lxml
 from bs4 import BeautifulSoup
@@ -8,6 +10,11 @@ db = client.news_base
 collection = db.News_collection
 newsposts = db.news
 
+month = ['Янв', 'Фев', 'Мар', 'Апр', 'Мая', 'Июня', 'Июля', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек']
+now = datetime.datetime.now()
+current_day = str(now.day)
+current_month = month[int(now.month)-1]
+current_date = ''
 url = 'https://gorvesti.ru'
 urls = []
 dates = []
@@ -18,13 +25,12 @@ news = ""
 news_text = ''
 video_link = ''
 video_links = []
-y = 0
 for i in range(5000):
     urls.clear()
     url_news = 'https://gorvesti.ru/feed/' + "{}".format(i)
     response = requests.get(url_news)
     soup = BeautifulSoup(response.text, 'lxml')
-    links_div = soup.find_all('div','itm-title')
+    links_div = soup.find_all('div', 'itm-title')
     for title in links_div:
         str = title.find('a').get('href')
         urls.append(url + str)
@@ -34,6 +40,9 @@ for i in range(5000):
         header = soup.find(class_='article-title-block')
         main = soup.find(class_='item block')
         texts_default = main.find_all('p')
+        current_date = header.find(class_='dt').text
+        if len(current_date) < 6:
+            current_date = current_day + ' '+current_month + ' '+ current_date
         video_link_prev = main.find(class_="video")
         if video_link_prev is not None:
             video_link = video_link_prev.find('iframe').src
@@ -47,7 +56,7 @@ for i in range(5000):
         post = {
             'link': news,
             'title': header.find(class_='title-block').text,
-            'date': header.find(class_='dt').text,
+            'date': current_date,
             'content': news_text,
             'videolink': video_link
         }
